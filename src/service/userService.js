@@ -43,6 +43,28 @@ const getUserList = async () => {
     //     Promise: bluebird
     // });
 
+    // test relationship
+    let newUser = await db.User.findOne({
+        attributes: ['id', 'username', 'email'],
+        where: { id: 1 },
+        raw: true,
+        include: {
+            model: db.Group,
+            attributes: ['name', 'description']
+        },
+        nest: true
+    })
+
+    let roles = await db.Role.findAll({
+        attribule: ['name', 'description'],
+        include: { model: db.Group, where: { id: 1 } },
+        raw: true,
+        nest: true
+    })
+
+    console.log('>>>> new User', newUser);
+    console.log('>>>> new role', roles);
+
     let users = []
 
     try {

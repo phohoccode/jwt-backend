@@ -11,12 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // 1 user chỉ có 1 group
+      User.belongsTo(models.Group)
+      // 1 user thì có nhiều role thông qua bảng trung gian Project-User
+      User.belongsToMany(models.Role, { through: 'Project_User' })
     }
   }
   User.init({
     email: DataTypes.STRING,
     username: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    address:  DataTypes.STRING,
+    sex:  DataTypes.STRING,
+    phone:  DataTypes.STRING,
+    groupId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

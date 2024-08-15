@@ -12,7 +12,7 @@ const getUserPage = async (req, res) => {
 
 const handleCreateNewUser = (req, res) => {
     const { username, email, password } = req.body
-
+    
     createNewUser(username, email, password)
     res.redirect('/user')
 }
