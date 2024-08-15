@@ -50,14 +50,18 @@ const getUserList = async () => {
         raw: true,
         include: {
             model: db.Group,
-            attributes: ['name', 'description']
+            attributes: ['id', 'name', 'description']
         },
         nest: true
     })
 
     let roles = await db.Role.findAll({
-        attribule: ['name', 'description'],
-        include: { model: db.Group, where: { id: 1 } },
+        attributes: ['id', 'url', 'description'],
+        include: {
+            model: db.Group,
+            where: { id: 1 },
+            attributes: ['id', 'name', 'description'],
+        },
         raw: true,
         nest: true
     })
