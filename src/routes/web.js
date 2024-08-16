@@ -1,5 +1,6 @@
 import express from 'express'
 import { getHomePage, getUserPage, handleCreateNewUser, handleDeleteUser, getUpdateUser, handleUpdateUser } from '../controllers/homeController'
+import { testApi } from '../controllers/apiController'
 
 const router = express.Router()
 
@@ -11,6 +12,9 @@ const initWebRoutes = (app) => {
     router.post('/users/create-user', handleCreateNewUser)
     router.post('/delete-user/:id', handleDeleteUser)
     router.post('/users/update-user', handleUpdateUser)
+
+    // test api
+    router.get('/api/test-api', testApi)
 
     // kết nối tất cả router đã định nghĩa ở phía trên
     return app.use('/', router) 
