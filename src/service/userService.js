@@ -45,13 +45,13 @@ const getUserList = async () => {
 
     // test relationship
     let newUser = await db.User.findOne({
-        attributes: ['id', 'username', 'email'],
         where: { id: 1 },
-        raw: true,
+        attributes: ['id', 'username', 'email'],
         include: {
             model: db.Group,
             attributes: ['id', 'name', 'description']
         },
+        raw: true,
         nest: true
     })
 

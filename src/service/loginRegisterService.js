@@ -1,6 +1,6 @@
 import db from '../models'
 import bcrypt from 'bcryptjs';
-import { Op, where } from 'sequelize';
+import { Op } from 'sequelize';
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -81,7 +81,6 @@ const checkPassword = (inputPass, hashPass) => {
 
 const handleUserLogin = async (rawData) => {
     try {
-
         const user = await db.User.findOne({
             where: {
                 [Op.or]: [

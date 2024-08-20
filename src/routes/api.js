@@ -1,6 +1,7 @@
 import express from 'express'
 
 import { testApi, handleRegister, handleLogin } from '../controllers/apiController'
+import { readFuc, updateFuc, deleteFuc, createFuc } from '../controllers/userController'
 
 const router = express.Router()
 
@@ -10,7 +11,11 @@ const initApiRoutes = (app) => {
     router.post('/register', handleRegister)
     router.post('/login', handleLogin)
 
-    // kết nối tất cả router đã định nghĩa ở phía trên
+    router.get('/user/read', readFuc)
+    router.post('/user/create', createFuc)
+    router.put('/user/update', updateFuc)
+    router.put('/user/delete', deleteFuc)
+
     return app.use('/api/v1', router) 
 }
 
