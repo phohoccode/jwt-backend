@@ -2,6 +2,7 @@ import express from 'express'
 
 import { testApi, handleRegister, handleLogin } from '../controllers/apiController'
 import { readFuc, updateFuc, deleteFuc, createFuc } from '../controllers/userController'
+import { readGroupFunc } from '../controllers/groupController'
 
 const router = express.Router()
 
@@ -14,9 +15,11 @@ const initApiRoutes = (app) => {
     router.get('/user/read', readFuc)
     router.post('/user/create', createFuc)
     router.put('/user/update', updateFuc)
-    router.put('/user/delete', deleteFuc)
+    router.delete('/user/delete', deleteFuc)
 
-    return app.use('/api/v1', router) 
+    router.get('/group/read', readGroupFunc)
+
+    return app.use('/api/v1', router)
 }
 
 export default initApiRoutes

@@ -1,13 +1,27 @@
-import { getAllUser, createNewUser, updateUser, deleteUser } from '../service/userApiService'
+import { getAllUser, getUserWithPagination, createNewUser, updateUser, deleteUser } from '../service/userApiService'
 
 const readFuc = async (req, res) => {
     try {
-        const data = await getAllUser()
-        return res.status(200).json({
-            EM: data.EM,
-            EC: data.EC,
-            DT: data.DT
-        })
+        if (req.query.page && req.query.limit) {
+            const { page, limit } = req.query
+
+            const data = await getUserWithPagination(+page, +limit)
+
+            // trả data về client
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT
+            })
+        } else {
+            const data = await getAllUser()
+            
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT
+            })
+        }
     } catch (error) {
         console.log(error);
         return res.status(500).json({
@@ -18,11 +32,18 @@ const readFuc = async (req, res) => {
     }
 }
 
-const createFuc = (req, res) => {
+const createFuc = async (req, res) => {
     try {
-        
+        const data = await createNewUser(req.body)
+        console.log(req.body)
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
+
     } catch (error) {
-         return res.status(500).json({
+        return res.status(500).json({
             EM: 'error from sever',
             EC: '-1',
             DT: ''
@@ -32,9 +53,9 @@ const createFuc = (req, res) => {
 
 const updateFuc = (req, res) => {
     try {
-        
+
     } catch (error) {
-         return res.status(500).json({
+        return res.status(500).json({
             EM: 'error from sever',
             EC: '-1',
             DT: ''
@@ -42,11 +63,17 @@ const updateFuc = (req, res) => {
     }
 }
 
-const deleteFuc = (req, res) => {
+const deleteFuc = async (req, res) => {
     try {
-        
+        const data = await deleteUser(req.body.id)
+
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
     } catch (error) {
-         return res.status(500).json({
+        return res.status(500).json({
             EM: 'error from sever',
             EC: '-1',
             DT: ''
