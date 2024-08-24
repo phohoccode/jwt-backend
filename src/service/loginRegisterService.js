@@ -40,14 +40,14 @@ const registerNewUser = async (rawUserData) => {
 
         if (isEmailExist) {
             return {
-                EM: 'The email is already exist!',
+                EM: 'Địa chỉ email đã tồn tại!',
                 EC: 1
             }
         }
 
         if (isPhoneExist) {
             return {
-                EM: 'The phone is already exist!',
+                EM: 'Số điện thoại đã tồn tại!',
                 EC: 1
             }
         }
@@ -120,5 +120,5 @@ const handleUserLogin = async (rawData) => {
 }
 
 module.exports = {
-    registerNewUser, handleUserLogin
+    registerNewUser, handleUserLogin, hashPassword, checkEmailExist, checkPhoneExist, checkPassword
 }

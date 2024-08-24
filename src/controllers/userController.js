@@ -6,7 +6,7 @@ const readFuc = async (req, res) => {
             const { page, limit } = req.query
 
             const data = await getUserWithPagination(+page, +limit)
-
+            
             // trả data về client
             return res.status(200).json({
                 EM: data.EM,
@@ -25,7 +25,7 @@ const readFuc = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            EM: 'error from sever',
+            EM: 'Lỗi từ máy chủ!',
             EC: '-1',
             DT: ''
         })
@@ -35,7 +35,7 @@ const readFuc = async (req, res) => {
 const createFuc = async (req, res) => {
     try {
         const data = await createNewUser(req.body)
-        console.log(req.body)
+        
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
@@ -44,19 +44,26 @@ const createFuc = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-            EM: 'error from sever',
+            EM: 'Lỗi từ máy chủ',
             EC: '-1',
             DT: ''
         })
     }
 }
 
-const updateFuc = (req, res) => {
+const updateFuc = async (req, res) => {
     try {
+        const data = await updateUser(req.body)
+        
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
 
     } catch (error) {
         return res.status(500).json({
-            EM: 'error from sever',
+            EM: 'Lỗi từ máy chủ',
             EC: '-1',
             DT: ''
         })
@@ -66,6 +73,7 @@ const updateFuc = (req, res) => {
 const deleteFuc = async (req, res) => {
     try {
         const data = await deleteUser(req.body.id)
+        console.log(data)
 
         return res.status(200).json({
             EM: data.EM,
@@ -74,7 +82,7 @@ const deleteFuc = async (req, res) => {
         })
     } catch (error) {
         return res.status(500).json({
-            EM: 'error from sever',
+            EM: 'Lỗi từ máy chủ',
             EC: '-1',
             DT: ''
         })

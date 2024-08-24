@@ -4,13 +4,11 @@ const readGroupFunc = async (req, res) => {
     try {
         const data = await getGroup()
 
-        if (data) {
-            return res.status(200).json({
-                EM: data.EM,
-                EC: data.EC,
-                DT: data.DT
-            })
-        }
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
     } catch (error) {
         console.log(error)
         return res.status(500).json({
