@@ -6,6 +6,10 @@ import { readGroupFunc } from '../controllers/groupController'
 
 const router = express.Router()
 
+const testMiddleware = (req, res, next) => {
+    
+}
+
 const initApiRoutes = (app) => {
 
     router.get('/test-api', testApi)

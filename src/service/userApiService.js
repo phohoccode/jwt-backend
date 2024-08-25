@@ -29,7 +29,7 @@ const getUserWithPagination = async (page, limit) => {
     try {
         const offset = (page - 1) * limit
         const { count, rows } = await db.User.findAndCountAll({
-            attributes: ['id', 'username', 'email', 'phone', 'sex', 'address'],
+            attributes: ['id', 'username', 'email', 'phone', 'sex', 'address', 'password'],
             include: {
                 model: db.Group,
                 attributes: ['id', 'name', 'description']
@@ -115,10 +115,11 @@ const updateUser = async (data) => {
         const user = await db.User.findOne({
             where: { id: data.id }
         })
-
-
+        
         if (user) {
             await user.update({
+                email: data.email,
+                phone: data.phone,
                 username: data.username,
                 address: data.address,
                 sex: data.sex,

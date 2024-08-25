@@ -19,7 +19,7 @@ const handleRegister = async (req, res) => {
             })
         }
 
-        if(req.body.password.length < 4) {
+        if (req.body.password.length < 4) {
             return res.status(200).json({
                 EM: 'Password length must be more than 3 letters',
                 EC: '1',
@@ -47,6 +47,7 @@ const handleRegister = async (req, res) => {
 const handleLogin = async (req, res) => {
     try {
         const dataUser = await handleUserLogin(req.body)
+        res.cookie('phohoccode', dataUser.DT.access_token, { httpOnly: true })
 
         return res.status(200).json({
             EM: dataUser.EM,
