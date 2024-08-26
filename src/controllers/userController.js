@@ -4,9 +4,8 @@ const readFuc = async (req, res) => {
     try {
         if (req.query.page && req.query.limit) {
             const { page, limit } = req.query
-
             const data = await getUserWithPagination(+page, +limit)
-            
+
             // trả data về client
             return res.status(200).json({
                 EM: data.EM,
@@ -15,7 +14,7 @@ const readFuc = async (req, res) => {
             })
         } else {
             const data = await getAllUser()
-            
+
             return res.status(200).json({
                 EM: data.EM,
                 EC: data.EC,
@@ -35,7 +34,7 @@ const readFuc = async (req, res) => {
 const createFuc = async (req, res) => {
     try {
         const data = await createNewUser(req.body)
-        
+
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
@@ -54,7 +53,7 @@ const createFuc = async (req, res) => {
 const updateFuc = async (req, res) => {
     try {
         const data = await updateUser(req.body)
-        
+
         return res.status(200).json({
             EM: data.EM,
             EC: data.EC,
@@ -89,6 +88,19 @@ const deleteFuc = async (req, res) => {
     }
 }
 
+const getUserAccount = async (req, res) => {
+    return res.status(200).json({
+        EM: 'Lấy thông tin người dùng thành công!',
+        EC: 0,
+        DT: {
+            access_token: req.token,
+            groupWithRoles: req.user.groupWithRoles,
+            email: req.user.email,
+            username: req.user.username
+        }
+    })
+}
+
 module.exports = {
-    readFuc, createFuc, updateFuc, deleteFuc
+    readFuc, createFuc, updateFuc, deleteFuc, getUserAccount
 }

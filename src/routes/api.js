@@ -1,20 +1,20 @@
 import express from 'express'
 
-import { testApi, handleRegister, handleLogin } from '../controllers/apiController'
-import { readFuc, updateFuc, deleteFuc, createFuc } from '../controllers/userController'
+import { handleRegister, handleLogin } from '../controllers/apiController'
+import { readFuc, updateFuc, deleteFuc, createFuc, getUserAccount } from '../controllers/userController'
 import { readGroupFunc } from '../controllers/groupController'
+import { checkUserJWT, checkUserPermisstion } from '../middleware/JWTActions'
 
 const router = express.Router()
 
-const testMiddleware = (req, res, next) => {
-    
-}
 
 const initApiRoutes = (app) => {
 
-    router.get('/test-api', testApi)
+    router.all('*', checkUserJWT, checkUserPermisstion)
+
     router.post('/register', handleRegister)
     router.post('/login', handleLogin)
+    router.get('/account', getUserAccount)
 
     router.get('/user/read', readFuc)
     router.post('/user/create', createFuc)

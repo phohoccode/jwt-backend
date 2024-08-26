@@ -102,6 +102,7 @@ const handleUserLogin = async (rawData) => {
                 const groupWithRoles = await getGroupWithRoles(user)
                 const payload = {
                     email: user.email,
+                    username: user.username,
                     groupWithRoles,
                     expiresIn: process.env.JWT_EXPIRES_IN
                 }
@@ -113,7 +114,9 @@ const handleUserLogin = async (rawData) => {
                     EC: 0,
                     DT: {
                         access_token: token,
-                        groupWithRoles
+                        groupWithRoles,
+                        email: user.email,
+                        username: user.username
                     }
                 }
             }

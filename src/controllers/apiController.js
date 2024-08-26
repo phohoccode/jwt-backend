@@ -1,12 +1,5 @@
 import { registerNewUser, handleUserLogin } from "../service/loginRegisterService"
 
-const testApi = (req, res) => {
-    res.status(200).json({
-        message: 'ok',
-        data: 'test api'
-    })
-}
-
 const handleRegister = async (req, res) => {
     // EM: error message, EC: error code, DT: data
     try {
@@ -46,13 +39,15 @@ const handleRegister = async (req, res) => {
 
 const handleLogin = async (req, res) => {
     try {
-        const dataUser = await handleUserLogin(req.body)
-        res.cookie('phohoccode', dataUser.DT.access_token, { httpOnly: true })
+        const data = await handleUserLogin(req.body)
+        if (data && data.DT.access_token) {
+            res.cookie('phohoccode', data.DT.access_token, { httpOnly: true, maxAge: 3600000 })
+        }
 
         return res.status(200).json({
-            EM: dataUser.EM,
-            EC: dataUser.EC,
-            DT: dataUser.DT
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
         })
     } catch (error) {
         return res.status(500).json({
@@ -64,7 +59,6 @@ const handleLogin = async (req, res) => {
 }
 
 module.exports = {
-    testApi,
     handleRegister,
     handleLogin
 }
