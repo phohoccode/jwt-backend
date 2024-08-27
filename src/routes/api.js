@@ -7,7 +7,6 @@ import { checkUserJWT, checkUserPermisstion } from '../middleware/JWTActions'
 
 const router = express.Router()
 
-
 const initApiRoutes = (app) => {
 
     router.all('*', checkUserJWT, checkUserPermisstion)
