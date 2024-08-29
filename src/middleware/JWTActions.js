@@ -7,7 +7,9 @@ const createJWT = (payload) => {
     const key = process.env.JWT_SECRET
     let token = null
     try {
-        token = jwt.sign(payload, key);
+        token = jwt.sign(payload, key, {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        });
     } catch (error) {
         console.log(error)
     }
@@ -27,6 +29,13 @@ const verifyToken = (token) => {
     return decoded
 }
 
+const extracToken = (req) => {
+    console.log('>>> JWTActions-extracToken-req.headers: ', req.headers)
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        return req.headers.authorization.split(' ')[1]
+    }
+}
+
 const checkUserJWT = (req, res, next) => {
     if (nonSecurePaths.includes(req.path)) {
         console.log('>>> JWTActions-checkUserJWT-path:', req.path)
@@ -38,9 +47,10 @@ const checkUserJWT = (req, res, next) => {
     console.log('>>> JWTActions-checkUserJWT: qua middleware')
 
     const cookies = req.cookies
+    const tokenFromHeader = extracToken(req)
 
-    if (cookies && cookies.phohoccode) {
-        const token = cookies.phohoccode
+    if ((cookies && cookies.phohoccode) || tokenFromHeader) {
+        const token = cookies.phohoccode ? cookies.phohoccode : tokenFromHeader
         const decoded = verifyToken(token)
 
         if (decoded) {
