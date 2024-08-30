@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 require('dotenv').config()
 
-const nonSecurePaths = ['/', '/login', '/register']
+const nonSecurePaths = ['/', '/login', '/register', '/logout']
 
 const createJWT = (payload) => {
     const key = process.env.JWT_SECRET
@@ -49,6 +49,9 @@ const checkUserJWT = (req, res, next) => {
     const cookies = req.cookies
     const tokenFromHeader = extracToken(req)
 
+    console.log('>>>JWTActions-checkUserJWT-cookies: ', cookies.phohoccode || null)
+    console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
+
     if ((cookies && cookies.phohoccode) || tokenFromHeader) {
         const token = cookies.phohoccode ? cookies.phohoccode : tokenFromHeader
         const decoded = verifyToken(token)
@@ -85,10 +88,10 @@ const checkUserPermisstion = (req, res, next) => {
     console.log('>>> JWTActions-checkUserPermisstion: qua middleware')
 
     if (req.user) {
+        console.log('>>> JWTActions-checkUserPermisstion-req.user: ', req.user)
         const email = req.user.email
         const roles = req.user.groupWithRoles.Roles
         const currentUrl = req.path
-        console.log('>>> JWTActions-checkUserPermisstion-roles:\n', roles)
 
         if (!roles || roles.length === 0) {
             console.log('>>> JWTActions-checkUserPermisstion-roles:', roles)

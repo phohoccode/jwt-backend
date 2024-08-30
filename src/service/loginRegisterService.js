@@ -127,7 +127,7 @@ const handleUserLogin = async (rawData) => {
         }
 
         return {
-            EM: 'Email/Phone or password is inccorect!',
+            EM: 'Thông tin tài khoản không chính xác!',
             EC: 1,
             DT: ''
         }

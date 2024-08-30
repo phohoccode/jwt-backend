@@ -68,7 +68,25 @@ const handleLogin = async (req, res) => {
     }
 }
 
+const handleLogout = (req,res) => {
+    try {
+        res.clearCookie("phohoccode")
+        return res.status(200).json({
+            EM: 'Đăng xuất thành công',
+            EC: 0,
+            DT: ''
+        })
+    } catch (error) {
+        return res.status(500).json({
+            EM: 'error from sever',
+            EC: '-1',
+            DT: ''
+        })
+    }
+}
+
 module.exports = {
     handleRegister,
-    handleLogin
+    handleLogin,
+    handleLogout
 }
