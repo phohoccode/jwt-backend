@@ -4,7 +4,7 @@ import { handleRegister, handleLogin, handleLogout } from '../controllers/apiCon
 import { readFuc, updateFuc, deleteFuc, createFuc, getUserAccount } from '../controllers/userController'
 import { readGroupFunc } from '../controllers/groupController'
 import { checkUserJWT, checkUserPermisstion } from '../middleware/JWTActions'
-import { readRoleFuc, createRoleFuc, updateRoleFuc, deleteRoleFuc } from '../controllers/roleController'
+import { readRoleFuc, createRoleFuc, deleteRoleFuc } from '../controllers/roleController'
 
 const router = express.Router()
 
@@ -22,10 +22,8 @@ const initApiRoutes = (app) => {
     router.put('/user/update', updateFuc)
     router.delete('/user/delete', deleteFuc)
 
-
     router.get('/role/read', readRoleFuc)
     router.post('/role/create', createRoleFuc)
-    router.put('/role/update', updateRoleFuc)
     router.delete('/role/delete', deleteRoleFuc)
 
     router.get('/group/read', readGroupFunc)

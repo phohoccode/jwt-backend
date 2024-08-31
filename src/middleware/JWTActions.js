@@ -69,11 +69,11 @@ const checkUserJWT = (req, res, next) => {
             })
         }
     } else {
-        return res.status(401).json({
-            EC: 1,
-            EM: 'Người dùng chưa đăng nhập!',
-            DT: ''
-        })
+        // return res.status(401).json({
+        //     EC: 1,
+        //     EM: 'Người dùng chưa đăng nhập!',
+        //     DT: ''
+        // })
     }
 }
 
