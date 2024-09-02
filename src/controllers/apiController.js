@@ -52,7 +52,7 @@ const handleLogin = async (req, res) => {
             res.cookie('phohoccode', data.DT.access_token, { httpOnly: true, maxAge: 3600000 })
         }
 
-        console.log('>>> apiController-data:\n',data)
+        // console.log('>>> apiController-data:\n',data)
 
         return res.status(200).json({
             EM: data.EM,

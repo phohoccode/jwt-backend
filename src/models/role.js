@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             // define association here
             // 1 role thì có nhiều Group thông qua bảng trung gian là Group_Role
-            Role.belongsToMany(models.Group, { through: 'Group_Role' })
+            Role.belongsToMany(models.Group, { through: 'Group_Role', foreignKey: 'roleId' })
         }
     }
     Role.init({

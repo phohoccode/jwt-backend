@@ -84,7 +84,7 @@ const checkPassword = (inputPass, hashPass) => {
 
 const handleUserLogin = async (rawData) => {
     try {
-        console.log('>>> loginRegisterService-rawData:\n', rawData)
+        // console.log('>>> loginRegisterService-rawData:\n', rawData)
         const user = await db.User.findOne({
             where: {
                 [Op.or]: [
@@ -95,24 +95,24 @@ const handleUserLogin = async (rawData) => {
             raw: true,
             nest: true
         })
-        console.log('>>> loginRegisterService-user: ', user)
+        // console.log('>>> loginRegisterService-user: ', user)
 
         if (user) {
             const isCorrectPass = checkPassword(rawData.password, user.password)
 
             if (isCorrectPass) {
                 const groupWithRoles = await getGroupWithRoles(user)
-                console.log('>>> loginRegisterService-groupWithRoles:', groupWithRoles)
+                // console.log('>>> loginRegisterService-groupWithRoles:', groupWithRoles)
                 const payload = {
                     email: user.email,
                     username: user.username,
                     groupWithRoles
                 }
 
-                console.log('>>> loginRegisterService-payload:\n', payload)
+                // console.log('>>> loginRegisterService-payload:\n', payload)
 
                 const token = createJWT(payload)
-                console.log('>>> loginRegisterService-token:\n', token)
+                // console.log('>>> loginRegisterService-token:\n', token)
                 return {
                     EM: 'Đăng nhập thành công!',
                     EC: 0,

@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             // 1 Group thì sẽ có nhiều User
             Group.hasMany(models.User)
             // 1 Group có nhiều Role thông qua bảng trung gian là Group_role
-            Group.belongsToMany(models.Role, { through: 'Group_Role' })
+            Group.belongsToMany(models.Role, { through: 'Group_Role', foreignKey: 'roleId' })
         }
     }
     Group.init({

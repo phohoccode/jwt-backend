@@ -4,13 +4,20 @@ import { handleRegister, handleLogin, handleLogout } from '../controllers/apiCon
 import { readFuc, updateFuc, deleteFuc, createFuc, getUserAccount } from '../controllers/userController'
 import { readGroupFunc } from '../controllers/groupController'
 import { checkUserJWT, checkUserPermisstion } from '../middleware/JWTActions'
-import { readRoleFuc, createRoleFuc, deleteRoleFuc } from '../controllers/roleController'
+import {
+    readRoleFuc,
+    createRoleFuc,
+    deleteRoleFuc,
+    updateRoleFuc,
+    getRolesByGroupFunc,
+    assignRoleToGroupFunc
+} from '../controllers/roleController'
 
 const router = express.Router()
 
 const initApiRoutes = (app) => {
 
-    router.all('*', checkUserJWT, checkUserPermisstion)
+    // router.all('*', checkUserJWT, checkUserPermisstion)
 
     router.post('/register', handleRegister)
     router.post('/login', handleLogin)
@@ -25,6 +32,9 @@ const initApiRoutes = (app) => {
     router.get('/role/read', readRoleFuc)
     router.post('/role/create', createRoleFuc)
     router.delete('/role/delete', deleteRoleFuc)
+    router.put('/role/update', updateRoleFuc)
+    router.get('/role/by-group/:groupId', getRolesByGroupFunc)
+    router.post('/role/assign-to-group', assignRoleToGroupFunc)
 
     router.get('/group/read', readGroupFunc)
 
