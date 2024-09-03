@@ -38,7 +38,7 @@ const extracToken = (req) => {
 
 const checkUserJWT = (req, res, next) => {
     if (nonSecurePaths.includes(req.path)) {
-        // console.log('>>> JWTActions-checkUserJWT-path:', req.path)
+        console.log('>>> JWTActions-checkUserJWT-path:', req.path)
         // console.log('>>> JWTActions-checkUserJWT: không qua middleware')
         return next()
     }
@@ -49,15 +49,15 @@ const checkUserJWT = (req, res, next) => {
     const cookies = req.cookies
     const tokenFromHeader = extracToken(req)
 
-    // console.log('>>>JWTActions-checkUserJWT-cookies: ', cookies.phohoccode || null)
-    // console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
+    console.log('>>>JWTActions-checkUserJWT-cookies: ', cookies.phohoccode || null)
+    console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
 
     if ((cookies && cookies.phohoccode) || tokenFromHeader) {
         const token = cookies.phohoccode ? cookies.phohoccode : tokenFromHeader
         const decoded = verifyToken(token)
 
         if (decoded) {
-            // console.log('>>> JWTActions-checkUserJWT-decoded:\n', decoded)
+            console.log('>>> JWTActions-checkUserJWT-decoded:\n', decoded)
             req.user = decoded
             req.token = token
             next()
@@ -68,12 +68,6 @@ const checkUserJWT = (req, res, next) => {
                 DT: ''
             })
         }
-    } else {
-        // return res.status(401).json({
-        //     EC: 1,
-        //     EM: 'Người dùng chưa đăng nhập!',
-        //     DT: ''
-        // })
     }
 }
 

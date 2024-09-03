@@ -3,7 +3,7 @@ import {
     getAllRoles,
     deleteRole,
     updateRole,
-    getRolesByGroup,assignRoleToGroup
+    getRolesByGroup, assignRoleToGroup
 } from '../service/roleApiService'
 
 const readRoleFuc = async (req, res) => {
@@ -87,10 +87,8 @@ const updateRoleFuc = async (req, res) => {
 
 const getRolesByGroupFunc = async (req, res) => {
     try {
-        console.log(req.body);
 
         const data = await getRolesByGroup(req.params.groupId)
-        console.log(data)
 
         return res.status(200).json({
             EM: data.EM,

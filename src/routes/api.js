@@ -17,7 +17,7 @@ const router = express.Router()
 
 const initApiRoutes = (app) => {
 
-    // router.all('*', checkUserJWT, checkUserPermisstion)
+    router.all('*', checkUserJWT, checkUserPermisstion)
 
     router.post('/register', handleRegister)
     router.post('/login', handleLogin)

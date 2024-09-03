@@ -148,13 +148,17 @@ const getRolesByGroup = async (id) => {
         }
 
         const roles = await db.Group.findOne({
-            where: { id: id }, attributes: ['id', 'name', 'description'],
+            where: { id: id },
+            attributes: ['id', 'name', 'description'],
             include: {
                 model: db.Role,
                 attributes: ['id', 'url', 'description'],
                 through: { attributes: [] }
             }
         })
+
+        console.log('>>> roleApiService-getRolesByGroup-roles:\n', roles)
+        console.log('>>> roleApiService-getRolesByGroup-Roles:\n', roles.Roles)
 
         return {
             EM: 'Lấy danh sách quyền hạn thành công!',
@@ -174,14 +178,13 @@ const getRolesByGroup = async (id) => {
 
 const assignRoleToGroup = async (data) => {
     try {
-        console.log('data=',data.groupRoles)
         await db.Group_Role.destroy({
             where: { groupId: +data.groupId }
         })
 
         await db.Group_Role.bulkCreate(data.groupRoles)
         return {
-            EM: 'Gán quyền hạn cho nhóm thành công!',
+            EM: 'Chỉnh sửa quyền hạn của nhóm thành công!',
             EC: 0,
             DT: []
         }
