@@ -49,15 +49,15 @@ const checkUserJWT = (req, res, next) => {
     const cookies = req.cookies
     const tokenFromHeader = extracToken(req)
 
-    console.log('>>>JWTActions-checkUserJWT-cookies: ', cookies.phohoccode || null)
-    console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
+    // console.log('>>>JWTActions-checkUserJWT-cookies: ', cookies.phohoccode || null)
+    // console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
 
     if ((cookies && cookies.phohoccode) || tokenFromHeader) {
         const token = cookies.phohoccode ? cookies.phohoccode : tokenFromHeader
         const decoded = verifyToken(token)
 
         if (decoded) {
-            console.log('>>> JWTActions-checkUserJWT-decoded:\n', decoded)
+            // console.log('>>> JWTActions-checkUserJWT-decoded:\n', decoded)
             req.user = decoded
             req.token = token
             next()
@@ -95,7 +95,7 @@ const checkUserPermisstion = (req, res, next) => {
                 DT: ''
             })
         }
-        // console.log('>>> JWTActions-checkUserPermisstion-roles:', roles)
+        console.log('>>> JWTActions-checkUserPermisstion-roles:', roles)
         const canAccess = roles.some((role) => role.url === currentUrl || currentUrl.includes(role.url))
 
         if (canAccess) {

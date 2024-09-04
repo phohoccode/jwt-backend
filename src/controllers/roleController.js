@@ -46,10 +46,7 @@ const createRoleFuc = async (req, res) => {
 
 const deleteRoleFuc = async (req, res) => {
     try {
-        console.log(req.body);
-
-        const data = await deleteRole(req.body.id)
-        console.log(data)
+        const data = await deleteRole(req.body)
 
         return res.status(200).json({
             EM: data.EM,

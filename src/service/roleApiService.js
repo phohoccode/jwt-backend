@@ -30,7 +30,7 @@ const createNewRoles = async (roles) => {
         if (persists.length === 0) {
             return {
                 EM: 'Quyền hạn bị trùng khớp!',
-                EC: 0,
+                EC: 1,
                 DT: []
             }
         } else {

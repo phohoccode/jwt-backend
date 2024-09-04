@@ -64,6 +64,7 @@ const registerNewUser = async (rawUserData) => {
             username: rawUserData.username,
             phone: rawUserData.phone,
             password: hashPass,
+            groupId: 1
         })
 
         return {
