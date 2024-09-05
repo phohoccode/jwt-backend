@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
 require('dotenv').config()
 
-const nonSecurePaths = ['/', '/login', '/register', '/logout']
+const nonSecurePaths = ['/', '/login', '/register', '/logout', '/login/identify', '/reset-password']
 
-const createJWT = (payload) => {
-    const key = process.env.JWT_SECRET
+const createJWT = (payload, key) => {
     let token = null
     try {
+        // expiresIn: thời gian hết hạn token
         token = jwt.sign(payload, key, {
             expiresIn: process.env.JWT_EXPIRES_IN
         });
@@ -16,14 +16,13 @@ const createJWT = (payload) => {
     return token
 }
 
-const verifyToken = (token) => {
-    const key = process.env.JWT_SECRET
+const verifyToken = (token, key) => {
     let decoded = null
 
     try {
         decoded = jwt.verify(token, key)
     } catch (error) {
-        console.log(error)
+        console.log('token hết hạn',error)
     }
 
     return decoded
@@ -53,8 +52,9 @@ const checkUserJWT = (req, res, next) => {
     // console.log('>>>JWTActions-checkUserJWT-tokenFromHeader: ', tokenFromHeader)
 
     if ((cookies && cookies.phohoccode) || tokenFromHeader) {
+        const key = process.env.JWT_SECRET
         const token = cookies.phohoccode ? cookies.phohoccode : tokenFromHeader
-        const decoded = verifyToken(token)
+        const decoded = verifyToken(token, key)
 
         if (decoded) {
             // console.log('>>> JWTActions-checkUserJWT-decoded:\n', decoded)

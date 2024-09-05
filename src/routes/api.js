@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { handleRegister, handleLogin, handleLogout } from '../controllers/apiController'
+import { handleRegister, handleLogin, handleLogout, handleFindAccount, resetPassword } from '../controllers/apiController'
 import { readFuc, updateFuc, deleteFuc, createFuc, getUserAccount } from '../controllers/userController'
 import { readGroupFunc } from '../controllers/groupController'
 import { checkUserJWT, checkUserPermisstion } from '../middleware/JWTActions'
@@ -21,8 +21,10 @@ const initApiRoutes = (app) => {
 
     router.post('/register', handleRegister)
     router.post('/login', handleLogin)
+    router.post('/login/identify', handleFindAccount)
     router.get('/account', getUserAccount)
     router.post('/logout', handleLogout)
+    router.put('/reset-password', resetPassword)
 
     router.get('/user/read', readFuc)
     router.post('/user/create', createFuc)

@@ -1,4 +1,10 @@
-import { registerNewUser, handleUserLogin } from "../service/loginRegisterService"
+require('dotenv').config()
+import {
+    registerNewUser,
+    handleUserLogin,
+    handleUserFindAccount,
+    handleResetPassword
+} from "../service/loginRegisterService"
 
 const handleRegister = async (req, res) => {
     // EM: error message, EC: error code, DT: data
@@ -68,7 +74,7 @@ const handleLogin = async (req, res) => {
     }
 }
 
-const handleLogout = (req,res) => {
+const handleLogout = (req, res) => {
     try {
         res.clearCookie("phohoccode")
         return res.status(200).json({
@@ -85,8 +91,52 @@ const handleLogout = (req,res) => {
     }
 }
 
+const handleFindAccount = async (req, res) => {
+    try {
+        const data = await handleUserFindAccount(req.body.data)
+
+        if (data && data.DT.token_id) {
+            res.cookie('id', data.DT.token_id, { httpOnly: true, maxAge: 3600000 })
+        }
+
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
+    } catch (error) {
+        return res.status(500).json({
+            EM: 'error from sever',
+            EC: '-1',
+            DT: ''
+        })
+    }
+}
+
+const resetPassword = async (req, res) => {
+    try {
+        const tokenId = req.cookies.id
+        const data = await handleResetPassword(tokenId, req.body.data)
+ 
+        res.clearCookie(process.env.JWT_SECRET)
+        res.clearCookie('id')
+
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
+    } catch (error) {
+        return res.status(500).json({
+            EM: 'error from sever',
+            EC: '-1',
+            DT: ''
+        })
+    }
+}
+
 module.exports = {
     handleRegister,
     handleLogin,
-    handleLogout
+    handleLogout, handleFindAccount, resetPassword
 }
